@@ -1,25 +1,52 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import React, { Component } from "react";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends Component {
+  state = {
+    person: { fullName: "", bio: "", imgSrc: "", profession: "" },
+    show: true,
+    seconds: 0,
+  };
+
+  renderPerson = () => {
+    this.setState({
+      person: {
+        fullName: "Ezikeoha kajeta",
+        bio: "I love music",
+        imgSrc: {},
+        profession: "Full Stack developer",
+      },
+      show: !this.state.show,
+    });
+  };
+
+  render() {
+    return (
+      <div className="App">
+        {this.state.show && (
+          <div>
+            <h2> {this.state.person.fullName}</h2>
+            <h2>{this.state.person.bio}</h2>
+            <h2>{this.state.person.profession}</h2>
+            <div>
+              <img src={this.state.person.imgSrc.picss} alt="hiii" />
+            </div>
+          </div>
+        )}
+        <button onClick={this.renderPerson}>click me</button>
+        <p>This component was mounted {this.state.seconds}s ago</p>
+      </div>
+    );
+  }
+  time() {
+    this.setState((prevState) => ({
+      seconds: prevState.seconds + 1,
+    }));
+  }
+
+  componentDidMount() {
+    this.interval = setInterval(() => this.time(), 1000);
+  }
 }
 
 export default App;
